@@ -482,11 +482,7 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 ## Auteur
 
-**Ten** - Étudiant ETNA - Phase Code to Work
-
-- Portfolio : [votre-portfolio.com]
-- LinkedIn : [votre-linkedin]
-- Email : [votre-email]
+**coulib-b** - Étudiant ETNA - Phase Code to Work
 
 ## Remerciements
 
