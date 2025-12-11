@@ -1,0 +1,12 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--neo-bg);
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  padding: var(--spacing-lg) 0;
+}

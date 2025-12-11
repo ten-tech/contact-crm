@@ -1,0 +1,42 @@
+<header class="header">
+  <div class="header-container">
+    <div class="header-logo">
+      <h1 class="logo-text">
+        <span class="material-icons logo-icon">contacts</span>
+        Contact CRM
+      </h1>
+    </div>
+
+    <button class="menu-toggle neo-btn-icon" (click)="toggleMenu()" aria-label="Toggle menu">
+      <span class="material-icons menu-icon">{{ menuOpen ? 'close' : 'menu' }}</span>
+    </button>
+
+    <nav class="header-nav" [class.open]="menuOpen">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()" class="nav-link">
+        <span class="material-icons nav-icon">dashboard</span>
+        {{ t('header.dashboard') }}
+      </a>
+      <a routerLink="/contacts" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+        <span class="material-icons nav-icon">people</span>
+        {{ t('header.contacts') }}
+      </a>
+      <a routerLink="/categories" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+        <span class="material-icons nav-icon">label</span>
+        {{ t('header.categories') }}
+      </a>
+      <a routerLink="/favorites" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+        <span class="material-icons nav-icon">star</span>
+        {{ t('header.favorites') }}
+      </a>
+      <div class="header-actions">
+        <button class="theme-toggle neo-btn-icon" (click)="toggleTheme()" [title]="isDarkMode ? (currentLanguage === 'fr' ? 'Mode clair' : 'Light mode') : (currentLanguage === 'fr' ? 'Mode sombre' : 'Dark mode')">
+          <span class="material-icons">{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</span>
+        </button>
+        <button class="lang-toggle neo-btn-icon" (click)="toggleLanguage()" [title]="currentLanguage === 'fr' ? 'Switch to English' : 'Passer en Français'">
+          <span class="material-icons">translate</span>
+          <span class="lang-text">{{ currentLanguage.toUpperCase() }}</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,91 @@
+<div class="neo-container">
+  <div class="form-header">
+    <h1 class="page-title">{{ isEditMode ? ('categories.edit' | translate) : ('categories.add' | translate) }}</h1>
+  </div>
+
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="neo-card form-card">
+    <!-- Category Name -->
+    <div class="form-section">
+      <h2 class="section-title">
+        <span class="material-icons">category</span>
+        {{ 'categories.name' | translate }}
+      </h2>
+
+      <div class="neo-form-group">
+        <label class="neo-label" for="name">
+          {{ 'categories.name' | translate }} <span class="required">*</span>
+        </label>
+        <input
+          id="name"
+          type="text"
+          class="neo-input"
+          [class.error]="isFieldInvalid('name')"
+          formControlName="name"
+          [placeholder]="'categories.name' | translate"
+        />
+        @if (isFieldInvalid('name')) {
+          <span class="neo-error">{{ getErrorMessage('name') }}</span>
+        }
+      </div>
+    </div>
+
+    <!-- Color Picker -->
+    <div class="form-section">
+      <h2 class="section-title">
+        <span class="material-icons">palette</span>
+        {{ 'categories.color' | translate }}
+      </h2>
+
+      <div class="color-picker-section">
+        <div class="current-color-preview">
+          <div class="color-circle-large" [style.background]="categoryForm.get('color')?.value"></div>
+          <div class="color-info">
+            <span class="color-label">{{ 'categories.selectColor' | translate }}</span>
+            <span class="color-value">{{ categoryForm.get('color')?.value }}</span>
+          </div>
+        </div>
+
+        <div class="color-options">
+          @for (color of colorOptions; track color) {
+            <button
+              type="button"
+              class="color-option"
+              [class.selected]="categoryForm.get('color')?.value === color"
+              [style.background]="color"
+              (click)="selectColor(color)"
+              [title]="color"
+            >
+              @if (categoryForm.get('color')?.value === color) {
+                <span class="material-icons check-icon">check</span>
+              }
+            </button>
+          }
+        </div>
+
+        <div class="neo-form-group">
+          <label class="neo-label" for="color">
+            {{ 'categories.customColor' | translate }}
+          </label>
+          <input
+            id="color"
+            type="color"
+            class="color-input"
+            formControlName="color"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" class="neo-btn" (click)="onCancel()">
+        <span class="material-icons">close</span>
+        {{ 'categories.cancel' | translate }}
+      </button>
+      <button type="submit" class="neo-btn neo-btn-primary">
+        <span class="material-icons">{{ isEditMode ? 'save' : 'add' }}</span>
+        {{ 'categories.save' | translate }}
+      </button>
+    </div>
+  </form>
+</div>

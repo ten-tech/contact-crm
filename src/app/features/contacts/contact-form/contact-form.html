@@ -1,0 +1,220 @@
+<div class="neo-container">
+  <div class="form-header">
+    <h1 class="page-title">{{ isEditMode ? ('contacts.edit' | translate) : ('contacts.add' | translate) }}</h1>
+  </div>
+
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="neo-card form-card">
+    <!-- Personal Information -->
+    <div class="form-section">
+      <h2 class="section-title">
+        <span class="material-icons">person</span>
+        {{ 'contacts.contactInfo' | translate }}
+      </h2>
+
+      <div class="form-row">
+        <div class="neo-form-group">
+          <label class="neo-label" for="firstName">
+            {{ 'contacts.firstName' | translate }} <span class="required">*</span>
+          </label>
+          <input
+            id="firstName"
+            type="text"
+            class="neo-input"
+            [class.error]="isFieldInvalid('firstName')"
+            formControlName="firstName"
+            [placeholder]="'contacts.firstName' | translate"
+          />
+          @if (isFieldInvalid('firstName')) {
+            <span class="neo-error">{{ getErrorMessage('firstName') }}</span>
+          }
+        </div>
+
+        <div class="neo-form-group">
+          <label class="neo-label" for="lastName">
+            {{ 'contacts.lastName' | translate }} <span class="required">*</span>
+          </label>
+          <input
+            id="lastName"
+            type="text"
+            class="neo-input"
+            [class.error]="isFieldInvalid('lastName')"
+            formControlName="lastName"
+            [placeholder]="'contacts.lastName' | translate"
+          />
+          @if (isFieldInvalid('lastName')) {
+            <span class="neo-error">{{ getErrorMessage('lastName') }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="form-section">
+      <h2 class="section-title">
+        <span class="material-icons">contact_mail</span>
+        {{ 'contacts.contactInfo' | translate }}
+      </h2>
+
+      <div class="form-row">
+        <div class="neo-form-group">
+          <label class="neo-label" for="email">
+            {{ 'contacts.email' | translate }} <span class="required">*</span>
+          </label>
+          <input
+            id="email"
+            type="email"
+            class="neo-input"
+            [class.error]="isFieldInvalid('email')"
+            formControlName="email"
+            placeholder="example@email.com"
+          />
+          @if (isFieldInvalid('email')) {
+            <span class="neo-error">{{ getErrorMessage('email') }}</span>
+          }
+        </div>
+
+        <div class="neo-form-group">
+          <label class="neo-label" for="phone">
+            {{ 'contacts.phone' | translate }} <span class="required">*</span>
+          </label>
+          <input
+            id="phone"
+            type="tel"
+            class="neo-input"
+            [class.error]="isFieldInvalid('phone')"
+            formControlName="phone"
+            placeholder="+1 234 567 8900"
+          />
+          @if (isFieldInvalid('phone')) {
+            <span class="neo-error">{{ getErrorMessage('phone') }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Professional Information -->
+    <div class="form-section">
+      <h2 class="section-title">
+        <span class="material-icons">work</span>
+        {{ 'contacts.additionalInfo' | translate }}
+      </h2>
+
+      <div class="form-row">
+        <div class="neo-form-group">
+          <label class="neo-label" for="company">
+            {{ 'contacts.company' | translate }} <span class="required">*</span>
+          </label>
+          <input
+            id="company"
+            type="text"
+            class="neo-input"
+            [class.error]="isFieldInvalid('company')"
+            formControlName="company"
+            [placeholder]="'contacts.company' | translate"
+          />
+          @if (isFieldInvalid('company')) {
+            <span class="neo-error">{{ getErrorMessage('company') }}</span>
+          }
+        </div>
+
+        <div class="neo-form-group">
+          <label class="neo-label" for="jobTitle">
+            {{ 'contacts.jobTitle' | translate }} <span class="required">*</span>
+          </label>
+          <input
+            id="jobTitle"
+            type="text"
+            class="neo-input"
+            [class.error]="isFieldInvalid('jobTitle')"
+            formControlName="jobTitle"
+            [placeholder]="'contacts.jobTitle' | translate"
+          />
+          @if (isFieldInvalid('jobTitle')) {
+            <span class="neo-error">{{ getErrorMessage('jobTitle') }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Category and Options -->
+    <div class="form-section">
+      <h2 class="section-title">
+        <span class="material-icons">category</span>
+        {{ 'contacts.category' | translate }}
+      </h2>
+
+      <div class="form-row">
+        <div class="neo-form-group">
+          <label class="neo-label" for="categoryId">
+            {{ 'contacts.category' | translate }} <span class="required">*</span>
+          </label>
+          <select
+            id="categoryId"
+            class="neo-select"
+            [class.error]="isFieldInvalid('categoryId')"
+            formControlName="categoryId"
+          >
+            <option value="">{{ 'contacts.category' | translate }}</option>
+            @for (category of categories(); track category.id) {
+              <option [value]="category.id">{{ category.name }}</option>
+            }
+          </select>
+          @if (isFieldInvalid('categoryId')) {
+            <span class="neo-error">{{ getErrorMessage('categoryId') }}</span>
+          }
+        </div>
+
+        <div class="neo-form-group">
+          <label class="neo-label">{{ 'contacts.favorite' | translate }}</label>
+          <div class="checkbox-wrapper">
+            <label class="checkbox-label">
+              <input
+                type="checkbox"
+                formControlName="favorite"
+                class="checkbox-input"
+              />
+              <span class="checkbox-custom"></span>
+              <span class="material-icons star-icon" [class.active]="contactForm.get('favorite')?.value">
+                {{ contactForm.get('favorite')?.value ? 'star' : 'star_border' }}
+              </span>
+              {{ 'contacts.favorite' | translate }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="form-section">
+      <h2 class="section-title">
+        <span class="material-icons">notes</span>
+        {{ 'contacts.notes' | translate }}
+      </h2>
+
+      <div class="neo-form-group">
+        <label class="neo-label" for="notes">
+          {{ 'contacts.notes' | translate }}
+        </label>
+        <textarea
+          id="notes"
+          class="neo-textarea"
+          formControlName="notes"
+          [placeholder]="'contacts.notes' | translate"
+          rows="5"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" class="neo-btn" (click)="onCancel()">
+        <span class="material-icons">close</span>
+        {{ 'contacts.cancel' | translate }}
+      </button>
+      <button type="submit" class="neo-btn neo-btn-primary">
+        <span class="material-icons">{{ isEditMode ? 'save' : 'add' }}</span>
+        {{ 'contacts.save' | translate }}
+      </button>
+    </div>
+  </form>
+</div>

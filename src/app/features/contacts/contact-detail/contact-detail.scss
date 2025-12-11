@@ -1,0 +1,218 @@
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.contact-header-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl);
+
+  .contact-avatar-large {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+  }
+
+  .contact-header-info {
+    flex: 1;
+
+    .contact-name {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--neo-text-primary);
+      margin: 0 0 var(--spacing-xs) 0;
+    }
+
+    .contact-title {
+      font-size: 1.1rem;
+      color: var(--neo-text-secondary);
+      margin: 0 0 0.25rem 0;
+    }
+
+    .contact-company {
+      font-size: 1rem;
+      color: var(--neo-accent);
+      font-weight: 500;
+      margin: 0 0 var(--spacing-md) 0;
+    }
+
+    .category-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-xl);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+
+  .card-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--neo-text-primary);
+    margin: 0 0 var(--spacing-md) 0;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid rgba(163, 177, 198, 0.2);
+
+    .material-icons {
+      color: var(--neo-accent);
+    }
+  }
+
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+
+    .info-label {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--neo-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      .material-icons {
+        font-size: 1rem;
+      }
+    }
+
+    .info-value {
+      font-size: 1rem;
+      color: var(--neo-text-primary);
+      padding-left: 1.5rem;
+
+      &.link {
+        color: var(--neo-accent);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+
+        &:hover {
+          color: var(--neo-accent-light);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.notes-card {
+  grid-column: 1 / -1;
+
+  .notes-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--neo-text-primary);
+    white-space: pre-wrap;
+    margin: 0;
+    padding: var(--spacing-md);
+    background: rgba(163, 177, 198, 0.1);
+    border-radius: var(--radius-md);
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
+
+  .empty-icon {
+    font-size: 5rem;
+    color: var(--neo-text-secondary);
+    opacity: 0.5;
+    margin-bottom: var(--spacing-md);
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    color: var(--neo-text-primary);
+    margin: 0 0 var(--spacing-sm) 0;
+  }
+
+  p {
+    color: var(--neo-text-secondary);
+    margin: 0 0 var(--spacing-lg) 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-header {
+    flex-direction: column;
+    align-items: stretch;
+
+    .header-actions {
+      justify-content: space-between;
+    }
+  }
+
+  .contact-header-card {
+    flex-direction: column;
+    text-align: center;
+
+    .contact-header-info {
+      .category-badge {
+        margin-top: var(--spacing-sm);
+      }
+    }
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-card {
+    .info-item {
+      .info-value {
+        padding-left: 0;
+      }
+    }
+  }
+}

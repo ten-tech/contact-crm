@@ -1,0 +1,60 @@
+<div class="neo-container">
+  <div class="category-list-header">
+    <h1 class="page-title">{{ 'categories.title' | translate }}</h1>
+    <a routerLink="/categories/new" class="neo-btn neo-btn-primary">
+      <span class="material-icons">add</span>
+      {{ 'categories.add' | translate }}
+    </a>
+  </div>
+
+  @if (categories().length > 0) {
+    <div class="neo-grid neo-grid-3">
+      @for (category of categories(); track category.id) {
+        <div class="category-card neo-card">
+          <div class="category-card-header">
+            <div class="category-color" [style.background]="category.color"></div>
+            <button
+              class="neo-icon-btn delete-btn"
+              (click)="deleteCategory($event, category)"
+              [title]="('categories.delete' | translate) + ' ' + category.name"
+            >
+              <span class="material-icons">delete</span>
+            </button>
+          </div>
+
+          <div class="category-card-body">
+            <h3 class="category-name">{{ category.name }}</h3>
+            <div class="category-stats">
+              <div class="stat-item">
+                <span class="material-icons">people</span>
+                <span class="stat-value">{{ getContactCount(category.id) }}</span>
+                <span class="stat-label">{{ 'categories.contactsCount' | translate }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="category-card-footer">
+            <a [routerLink]="['/categories', category.id, 'edit']" class="neo-btn edit-btn">
+              <span class="material-icons">edit</span>
+              {{ 'categories.edit' | translate }}
+            </a>
+            <a [routerLink]="['/contacts']" [queryParams]="{category: category.id}" class="neo-btn view-btn">
+              <span class="material-icons">visibility</span>
+              {{ 'categories.viewContacts' | translate }}
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="empty-state neo-card">
+      <span class="material-icons empty-icon">category</span>
+      <h2>{{ 'categories.noCategories' | translate }}</h2>
+      <p>{{ 'categories.noCategoriesDesc' | translate }}</p>
+      <a routerLink="/categories/new" class="neo-btn neo-btn-primary">
+        <span class="material-icons">add</span>
+        {{ 'categories.add' | translate }}
+      </a>
+    </div>
+  }
+</div>

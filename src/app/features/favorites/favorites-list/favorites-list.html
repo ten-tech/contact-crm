@@ -1,0 +1,71 @@
+<div class="neo-container">
+  <div class="favorites-list-header">
+    <h1 class="page-title">
+      <span class="material-icons star-icon">star</span>
+      {{ 'favorites.title' | translate }}
+    </h1>
+    <div class="sort-control">
+      <label class="neo-label">{{ 'contacts.sortBy' | translate }}</label>
+      <select
+        class="neo-select"
+        [value]="sortBy()"
+        (change)="onSortChange($event)"
+      >
+        <option value="name-asc">{{ 'contacts.sortName' | translate }} (A-Z)</option>
+        <option value="name-desc">{{ 'contacts.sortName' | translate }} (Z-A)</option>
+        <option value="date-asc">{{ 'contacts.sortDate' | translate }} (Oldest)</option>
+        <option value="date-desc">{{ 'contacts.sortDate' | translate }} (Newest)</option>
+      </select>
+    </div>
+  </div>
+
+  @if (favoriteContacts().length > 0) {
+    <div class="neo-grid neo-grid-3">
+      @for (contact of favoriteContacts(); track contact.id) {
+        <a [routerLink]="['/contacts', contact.id]" class="contact-card neo-card">
+          <div class="contact-card-header">
+            <div class="contact-avatar" [style.background]="getCategoryColor(contact.categoryId)">
+              {{ getInitials(contact) }}
+            </div>
+            <button
+              class="favorite-btn"
+              (click)="toggleFavorite($event, contact.id)"
+            >
+              <span class="material-icons neo-star active">star</span>
+            </button>
+          </div>
+
+          <div class="contact-card-body">
+            <h3 class="contact-name">{{ contact.firstName }} {{ contact.lastName }}</h3>
+            <p class="contact-job">{{ contact.jobTitle }}</p>
+            <p class="contact-company">{{ contact.company }}</p>
+          </div>
+
+          <div class="contact-card-footer">
+            <div class="contact-info">
+              <span class="material-icons">email</span>
+              <span class="contact-email">{{ contact.email }}</span>
+            </div>
+            <div class="contact-info">
+              <span class="material-icons">phone</span>
+              <span class="contact-phone">{{ contact.phone }}</span>
+            </div>
+            <span class="category-badge" [style.background-color]="getCategoryColor(contact.categoryId)">
+              {{ getCategoryName(contact.categoryId) }}
+            </span>
+          </div>
+        </a>
+      }
+    </div>
+  } @else {
+    <div class="empty-state neo-card">
+      <span class="material-icons empty-icon">star_border</span>
+      <h2>{{ 'favorites.noFavorites' | translate }}</h2>
+      <p>{{ 'favorites.noFavoritesDesc' | translate }}</p>
+      <a routerLink="/contacts" class="neo-btn neo-btn-primary">
+        <span class="material-icons">people</span>
+        {{ 'dashboard.viewAllContacts' | translate }}
+      </a>
+    </div>
+  }
+</div>

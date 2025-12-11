@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Service de deploiement en prod avec le moteur nginx
+  contact-crm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: contact-crm
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - contact-crm-network
+
+  # Service de développement à mettre en commentaire avant la mise en prod
+  contact-crm-dev:
+    image: node:20-alpine
+    container_name: contact-crm-dev
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "4200:4200"
+    command: sh -c "npm install && npm start -- --host 0.0.0.0"
+    restart: unless-stopped
+    networks:
+      - contact-crm-network
+    profiles:
+      - dev
+
+networks:
+  contact-crm-network:
+    driver: bridge

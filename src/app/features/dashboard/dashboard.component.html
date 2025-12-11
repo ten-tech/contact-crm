@@ -1,0 +1,111 @@
+<div class="neo-container">
+  <div class="dashboard-header">
+    <h1 class="page-title">{{ 'dashboard.title' | translate }}</h1>
+    <p class="page-subtitle">Overview of your contact management system</p>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="neo-grid neo-grid-3">
+    <div class="stat-card neo-card">
+      <div class="stat-icon contacts-icon">
+        <span class="material-icons">people</span>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-value">{{ totalContacts() }}</h3>
+        <p class="stat-label">{{ 'dashboard.totalContacts' | translate }}</p>
+      </div>
+      <a routerLink="/contacts" class="stat-link">
+        {{ 'dashboard.viewAllContacts' | translate }} <span class="material-icons">arrow_forward</span>
+      </a>
+    </div>
+
+    <div class="stat-card neo-card">
+      <div class="stat-icon favorites-icon">
+        <span class="material-icons">star</span>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-value">{{ totalFavorites() }}</h3>
+        <p class="stat-label">{{ 'dashboard.favorites' | translate }}</p>
+      </div>
+      <a routerLink="/favorites" class="stat-link">
+        {{ 'dashboard.viewAllContacts' | translate }} <span class="material-icons">arrow_forward</span>
+      </a>
+    </div>
+
+    <div class="stat-card neo-card">
+      <div class="stat-icon categories-icon">
+        <span class="material-icons">label</span>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-value">{{ totalCategories() }}</h3>
+        <p class="stat-label">{{ 'dashboard.categories' | translate }}</p>
+      </div>
+      <a routerLink="/categories" class="stat-link">
+        {{ 'dashboard.viewAllCategories' | translate }} <span class="material-icons">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="section">
+    <h2 class="section-title">{{ 'dashboard.quickActions' | translate }}</h2>
+    <div class="quick-actions">
+      <a routerLink="/contacts/new" class="action-btn neo-btn neo-btn-primary">
+        <span class="material-icons">person_add</span>
+        {{ 'dashboard.addContact' | translate }}
+      </a>
+      <a routerLink="/categories/new" class="action-btn neo-btn">
+        <span class="material-icons">add_circle</span>
+        {{ 'dashboard.addCategory' | translate }}
+      </a>
+    </div>
+  </div>
+
+  <!-- Recent Contacts -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">{{ 'dashboard.recentContacts' | translate }}</h2>
+      <a routerLink="/contacts" class="section-link">
+        {{ 'dashboard.viewAllContacts' | translate }} <span class="material-icons">arrow_forward</span>
+      </a>
+    </div>
+
+    @if (recentContacts.length === 0) {
+      <div class="empty-state neo-card">
+        <span class="material-icons empty-icon">people_outline</span>
+        <h3>{{ 'dashboard.noRecentContacts' | translate }}</h3>
+        <p>{{ 'dashboard.startAdding' | translate }}</p>
+        <a routerLink="/contacts/new" class="neo-btn neo-btn-primary">
+          <span class="material-icons">person_add</span>
+          {{ 'dashboard.addContact' | translate }}
+        </a>
+      </div>
+    } @else {
+      <div class="contacts-grid">
+        @for (contact of recentContacts; track contact.id) {
+          <div class="contact-card neo-card">
+            <div class="contact-avatar" [style.background]="getCategoryColor(contact.categoryId)">
+              {{ getInitials(contact) }}
+            </div>
+            <div class="contact-info">
+              <h3 class="contact-name">{{ contact.firstName }} {{ contact.lastName }}</h3>
+              <p class="contact-job">{{ contact.jobTitle }} @{{ contact.company }}</p>
+              <p class="contact-email">{{ contact.email }}</p>
+              <div class="contact-meta">
+                <span class="neo-badge" [style.background]="getCategoryColor(contact.categoryId)" [style.color]="'white'">
+                  {{ getCategoryName(contact.categoryId) }}
+                </span>
+                @if (contact.favorite) {
+                  <span class="material-icons favorite-badge">star</span>
+                }
+              </div>
+            </div>
+            <a [routerLink]="['/contacts', contact.id]" class="contact-link">
+              <span class="material-icons">arrow_forward</span>
+            </a>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

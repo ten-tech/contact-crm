@@ -1,0 +1,129 @@
+<div class="neo-container">
+  <div class="contact-list-header">
+    <h1 class="page-title">{{ 'contacts.title' | translate }}</h1>
+    <a routerLink="/contacts/new" class="neo-btn neo-btn-primary">
+      <span class="material-icons">add</span>
+      {{ 'contacts.add' | translate }}
+    </a>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="neo-card filters-section">
+    <div class="filters-grid">
+      <!-- Search -->
+      <div class="filter-group">
+        <label class="neo-label">{{ 'contacts.search' | translate }}</label>
+        <input
+          type="text"
+          class="neo-input"
+          [placeholder]="'contacts.search' | translate"
+          [value]="searchQuery()"
+          (input)="onSearchChange($event)"
+        />
+      </div>
+
+      <!-- Category Filter -->
+      <div class="filter-group">
+        <label class="neo-label">{{ 'contacts.category' | translate }}</label>
+        <select
+          class="neo-select"
+          [value]="selectedCategory()"
+          (change)="onCategoryChange($event)"
+        >
+          <option value="all">{{ 'contacts.allCategories' | translate }}</option>
+          @for (category of categories(); track category.id) {
+            <option [value]="category.id">{{ category.name }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Sort -->
+      <div class="filter-group">
+        <label class="neo-label">{{ 'contacts.sortBy' | translate }}</label>
+        <select
+          class="neo-select"
+          [value]="sortBy()"
+          (change)="onSortChange($event)"
+        >
+          <option value="name-asc">{{ 'contacts.sortName' | translate }} (A-Z)</option>
+          <option value="name-desc">{{ 'contacts.sortName' | translate }} (Z-A)</option>
+          <option value="date-asc">{{ 'contacts.sortDate' | translate }} (Oldest)</option>
+          <option value="date-desc">{{ 'contacts.sortDate' | translate }} (Newest)</option>
+        </select>
+      </div>
+
+      <!-- Favorites Toggle -->
+      <div class="filter-group">
+        <label class="neo-label">{{ 'contacts.filterByCategory' | translate }}</label>
+        <button
+          class="neo-btn filter-btn"
+          [class.active]="showFavoritesOnly()"
+          (click)="toggleFavoritesFilter()"
+        >
+          <span class="material-icons">{{ showFavoritesOnly() ? 'star' : 'star_border' }}</span>
+          {{ 'contacts.favorite' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contacts Grid -->
+  @if (filteredContacts().length > 0) {
+    <div class="neo-grid neo-grid-3">
+      @for (contact of filteredContacts(); track contact.id) {
+        <a [routerLink]="['/contacts', contact.id]" class="contact-card neo-card">
+          <div class="contact-card-header">
+            <div class="contact-avatar" [style.background]="getCategoryColor(contact.categoryId)">
+              {{ getInitials(contact) }}
+            </div>
+            <button
+              class="favorite-btn"
+              (click)="toggleFavorite($event, contact.id)"
+              [class.active]="contact.favorite"
+            >
+              <span class="material-icons neo-star" [class.active]="contact.favorite">
+                {{ contact.favorite ? 'star' : 'star_border' }}
+              </span>
+            </button>
+          </div>
+
+          <div class="contact-card-body">
+            <h3 class="contact-name">{{ contact.firstName }} {{ contact.lastName }}</h3>
+            <p class="contact-job">{{ contact.jobTitle }}</p>
+            <p class="contact-company">{{ contact.company }}</p>
+          </div>
+
+          <div class="contact-card-footer">
+            <div class="contact-info">
+              <span class="material-icons">email</span>
+              <span class="contact-email">{{ contact.email }}</span>
+            </div>
+            <div class="contact-info">
+              <span class="material-icons">phone</span>
+              <span class="contact-phone">{{ contact.phone }}</span>
+            </div>
+            <span class="category-badge" [style.background-color]="getCategoryColor(contact.categoryId)">
+              {{ getCategoryName(contact.categoryId) }}
+            </span>
+          </div>
+        </a>
+      }
+    </div>
+  } @else {
+    <div class="empty-state neo-card">
+      <span class="material-icons empty-icon">person_off</span>
+      <h2>No contacts found</h2>
+      <p>Try adjusting your search or filters</p>
+      @if (searchQuery() || selectedCategory() !== 'all' || showFavoritesOnly()) {
+        <button class="neo-btn" (click)="searchQuery.set(''); selectedCategory.set('all'); showFavoritesOnly.set(false)">
+          Clear Filters
+        </button>
+      } @else {
+        <a routerLink="/contacts/new" class="neo-btn neo-btn-primary">
+          <span class="material-icons">add</span>
+          Create First Contact
+        </a>
+      }
+    </div>
+  }
+</div>

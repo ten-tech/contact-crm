@@ -1,0 +1,156 @@
+<div class="neo-container">
+  @if (contact) {
+    <div class="detail-header">
+      <button class="neo-btn" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+        Back to Contacts
+      </button>
+      <div class="header-actions">
+        <button class="neo-icon-btn" (click)="toggleFavorite()">
+          <span class="material-icons neo-star" [class.active]="contact.favorite">
+            {{ contact.favorite ? 'star' : 'star_border' }}
+          </span>
+        </button>
+        <button class="neo-btn" (click)="editContact()">
+          <span class="material-icons">edit</span>
+          Edit
+        </button>
+        <button class="neo-btn neo-btn-danger" (click)="deleteContact()">
+          <span class="material-icons">delete</span>
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <div class="detail-content">
+      <!-- Contact Header Card -->
+      <div class="neo-card contact-header-card">
+        <div class="contact-avatar-large" [style.background]="getCategoryColor()">
+          {{ getInitials() }}
+        </div>
+        <div class="contact-header-info">
+          <h1 class="contact-name">{{ contact.firstName }} {{ contact.lastName }}</h1>
+          <p class="contact-title">{{ contact.jobTitle }}</p>
+          <p class="contact-company">{{ contact.company }}</p>
+          <span class="category-badge" [style.background-color]="getCategoryColor()">
+            {{ getCategoryName() }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Contact Information Cards -->
+      <div class="info-grid">
+        <!-- Contact Details -->
+        <div class="neo-card info-card">
+          <h2 class="card-title">
+            <span class="material-icons">contact_mail</span>
+            Contact Information
+          </h2>
+          <div class="info-list">
+            <div class="info-item">
+              <span class="info-label">
+                <span class="material-icons">email</span>
+                Email
+              </span>
+              <a [href]="'mailto:' + contact.email" class="info-value link">
+                {{ contact.email }}
+              </a>
+            </div>
+            <div class="info-item">
+              <span class="info-label">
+                <span class="material-icons">phone</span>
+                Phone
+              </span>
+              <a [href]="'tel:' + contact.phone" class="info-value link">
+                {{ contact.phone }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Details -->
+        <div class="neo-card info-card">
+          <h2 class="card-title">
+            <span class="material-icons">work</span>
+            Professional Details
+          </h2>
+          <div class="info-list">
+            <div class="info-item">
+              <span class="info-label">
+                <span class="material-icons">business</span>
+                Company
+              </span>
+              <span class="info-value">{{ contact.company }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">
+                <span class="material-icons">badge</span>
+                Job Title
+              </span>
+              <span class="info-value">{{ contact.jobTitle }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">
+                <span class="material-icons">category</span>
+                Category
+              </span>
+              <span class="info-value">{{ getCategoryName() }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="neo-card info-card">
+          <h2 class="card-title">
+            <span class="material-icons">event</span>
+            Timeline
+          </h2>
+          <div class="info-list">
+            <div class="info-item">
+              <span class="info-label">
+                <span class="material-icons">add_circle</span>
+                Created
+              </span>
+              <span class="info-value">{{ formatDate(contact.createdAt) }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">
+                <span class="material-icons">update</span>
+                Last Updated
+              </span>
+              <span class="info-value">{{ formatDate(contact.updatedAt) }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">
+                <span class="material-icons">{{ contact.favorite ? 'star' : 'star_border' }}</span>
+                Favorite
+              </span>
+              <span class="info-value">{{ contact.favorite ? 'Yes' : 'No' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        @if (contact.notes) {
+          <div class="neo-card info-card notes-card">
+            <h2 class="card-title">
+              <span class="material-icons">notes</span>
+              Notes
+            </h2>
+            <p class="notes-content">{{ contact.notes }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="empty-state neo-card">
+      <span class="material-icons empty-icon">person_off</span>
+      <h2>Contact not found</h2>
+      <p>The contact you're looking for doesn't exist.</p>
+      <button class="neo-btn neo-btn-primary" (click)="goBack()">
+        <span class="material-icons">arrow_back</span>
+        Back to Contacts
+      </button>
+    </div>
+  }
+</div>

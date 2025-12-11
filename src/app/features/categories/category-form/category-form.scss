@@ -1,0 +1,203 @@
+.form-header {
+  margin-bottom: var(--spacing-lg);
+
+  .page-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--neo-text-primary);
+    margin: 0;
+  }
+}
+
+.form-card {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.form-section {
+  margin-bottom: var(--spacing-xl);
+
+  &:last-of-type {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--neo-text-primary);
+    margin: 0 0 var(--spacing-md) 0;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid rgba(163, 177, 198, 0.2);
+
+    .material-icons {
+      color: var(--neo-accent);
+    }
+  }
+
+  .required {
+    color: var(--neo-danger);
+  }
+
+  .neo-input {
+    &.error {
+      box-shadow: var(--shadow-inset), 0 0 0 2px var(--neo-danger);
+    }
+  }
+}
+
+.color-picker-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+
+  .current-color-preview {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: rgba(163, 177, 198, 0.1);
+    border-radius: var(--radius-md);
+
+    .color-circle-large {
+      width: 80px;
+      height: 80px;
+      min-width: 80px;
+      border-radius: 50%;
+      box-shadow: var(--shadow-md);
+      transition: transform var(--transition-fast);
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .color-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xs);
+
+      .color-label {
+        font-size: 0.9rem;
+        color: var(--neo-text-secondary);
+        font-weight: 500;
+      }
+
+      .color-value {
+        font-size: 1.25rem;
+        color: var(--neo-text-primary);
+        font-weight: 600;
+        font-family: 'Courier New', monospace;
+      }
+    }
+  }
+
+  .color-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: var(--spacing-md);
+
+    .color-option {
+      width: 60px;
+      height: 60px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-fast);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+
+      &:hover {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-md);
+      }
+
+      &.selected {
+        transform: scale(1.15);
+        box-shadow: var(--shadow-lg), 0 0 0 3px var(--neo-bg), 0 0 0 5px var(--neo-accent);
+      }
+
+      .check-icon {
+        color: white;
+        font-size: 2rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  .color-input {
+    width: 100px;
+    height: 50px;
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      box-shadow: var(--shadow-md);
+      transform: scale(1.05);
+    }
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+      border-radius: var(--radius-md);
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+      border-radius: var(--radius-md);
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+  border-top: 2px solid rgba(163, 177, 198, 0.2);
+
+  .neo-btn {
+    min-width: 150px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-header {
+    .page-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .color-picker-section {
+    .current-color-preview {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .color-options {
+      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+
+      .color-option {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+
+    .neo-btn {
+      width: 100%;
+    }
+  }
+}

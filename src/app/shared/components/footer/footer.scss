@@ -1,0 +1,54 @@
+.footer {
+  background: var(--neo-bg);
+  box-shadow: 0 -4px 8px var(--neo-shadow-dark), 0 4px 8px var(--neo-shadow-light);
+  margin-top: auto;
+  padding: var(--spacing-lg) 0;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  text-align: center;
+}
+
+.footer-text {
+  color: var(--neo-text-secondary);
+  font-size: 0.9rem;
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.footer-text-small {
+  color: var(--neo-text-secondary);
+  font-size: 0.85rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.footer-love {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.heart-icon {
+  font-size: 1rem;
+  color: var(--neo-accent);
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    padding: 0 var(--spacing-md);
+  }
+}
